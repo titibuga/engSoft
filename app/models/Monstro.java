@@ -19,5 +19,26 @@ public class Monstro extends Model {
 	public String id;
 	
 	public String nome;
+	public int energia;
+	
+	
+	public String getNome()
+	{
+		return this.nome;
+	}
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
+	
+	public int getEnergia()
+	{
+		return this.energia;
+	}
+	
+	public void setEnergia(int energia)
+	{
+		this.energia = energia;
+	}
 
 }

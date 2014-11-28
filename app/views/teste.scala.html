@@ -1,0 +1,39 @@
+@(monstro: Monstro)
+
+<html>
+<head>
+<script>
+        function ini(){
+	   var contador = document.getElementById("contador"); 
+	   contador.innerHTML = "0";
+	
+
+	}
+  
+	function adiciona() {
+		var contador = document.getElementById("contador"); 
+	// Define objeto
+		var valor	= contador.innerHTML; // Pega valor do campo hidden
+		valor = parseInt(valor) + 1; 
+	// Tranforma valor do campo hidden em numérico e adicona um
+		contador.innerHTML = valor.toString(); // Altera valor do contador
+	}
+</script>
+</head>
+<body onload="ini()">
+<h1>
+ @monstro.getNome()
+</h1>
+Energia: @monstro.getEnergia()
+<br><br><br>
+
+
+Energia sendo gerada:
+<h2>
+<p id="contador"></p>
+
+<button onclick="adiciona()">FRY </button>
+<h2>
+</body>
+</html>
+

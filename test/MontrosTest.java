@@ -16,6 +16,7 @@ public class MontrosTest {
             public void run() {
                 Monstro task = new Monstro();
                 task.nome = "Jubileu";
+                task.energia = 12;
                 task.save();
                 assertThat(task.id).isNotNull();
        
