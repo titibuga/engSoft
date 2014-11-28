@@ -3,12 +3,8 @@
 <html>
 <head>
 <script>
-        function ini(){
-	   var contador = document.getElementById("contador"); 
-	   contador.innerHTML = "0";
-	
 
-	}
+
   
 	function adiciona() {
 		var contador = document.getElementById("contador"); 
@@ -17,6 +13,13 @@
 		valor = parseInt(valor) + 1; 
 	// Tranforma valor do campo hidden em numérico e adicona um
 		contador.innerHTML = valor.toString(); // Altera valor do contador
+	}
+
+	function ini(){
+	   var contador = document.getElementById("contador"); 
+	   contador.innerHTML = "0";
+	   var intervalID = setInterval(adiciona, 1000);
+
 	}
 </script>
 </head>
