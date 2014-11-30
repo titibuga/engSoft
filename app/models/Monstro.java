@@ -149,7 +149,8 @@ public class Monstro extends Model {
 	
 	public void somaEnergia(int energia)
 	{
-		this.energia += energia;
+        int novaEnergia = this.getEnergia() + energia;
+        this.setEnergia(novaEnergia);
 	}
 
 }
