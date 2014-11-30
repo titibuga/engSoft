@@ -39,5 +39,20 @@ public class Application extends Controller {
     	mon = Monstro.find.byId(id);
     	return ok(teste.render(mon));
     }
+    
+    public static Result treina(String tipo)
+    {
+    	DynamicForm data = Form.form().bindFromRequest();
+    	Monstro	mon = Monstro.find.byId(data.get("mId"));
+    	if(tipo.equals("str"))
+    		mon.treinaAtributo(Monstro.Atributo.STR);
+    	else if(tipo.equals("dex"))
+    		mon.treinaAtributo(Monstro.Atributo.DEX);
+    	else if(tipo.equals("wis"))
+    		mon.treinaAtributo(Monstro.Atributo.WIS);
+    	mon.save();
+    	
+    	return redirect("/monstro/"+data.get("mId"));
+    }
 
 }

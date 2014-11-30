@@ -7,6 +7,9 @@ create table monstro (
   id                        varchar(255) not null,
   nome                      varchar(255),
   energia                   integer,
+  dex                       integer,
+  str                       integer,
+  wis                       integer,
   constraint pk_monstro primary key (id))
 ;
 

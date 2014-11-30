@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity
 public class Monstro extends Model {
 
-    public enum Atributo {
+    public static enum Atributo {
         STR, DEX, WIS
     }
     
@@ -55,7 +55,7 @@ public class Monstro extends Model {
 		if(this.energia >= custo)
 		{
 			this.energia -= custo;
-			this.aumentaAtributo(atributo);
+			this.incrementaAtributo(atributo);
 		}
 	}
     
@@ -64,7 +64,7 @@ public class Monstro extends Model {
 		return this.getAtributo(atributo) * this.getAtributo(atributo);
 	}
 	
-    public int incrementaAtributo(Atributo atributo)
+    public void incrementaAtributo(Atributo atributo)
     {
         int valorAntigo = this.getAtributo(atributo);
         int valorNovo = valorAntigo + 1;
@@ -76,20 +76,16 @@ public class Monstro extends Model {
         switch (atributo) {
             case STR:
                 return this.getStr();
-                break;
             case DEX:
                 return this.getDex();
-                break;
             case WIS:
                 return this.getWis();
-                break;
             default:
                 throw new IllegalArgumentException("O atributo passado para o getAtributo não foi reconhecido.");
-                break;
         }
     }
     
-    public int setAtributo(Atributo atributo, int valor)
+    public void setAtributo(Atributo atributo, int valor)
     {
         switch (atributo) {
             case STR:
@@ -103,7 +99,7 @@ public class Monstro extends Model {
                 break;
             default:
                 throw new IllegalArgumentException("O atributo passado para o setAtributo não foi reconhecido.");
-                break;
+                
         }
     }
 

@@ -33,6 +33,28 @@
 Energia: @monstro.getEnergia()
 <br><br><br>
 
+Atributos: <br><br>
+STR: @monstro.getStr()
+
+<form action="/hue/treina/str" method="post">
+	<input type="hidden" name="mId" value="@monstro.getId()"/>	
+    <input type="submit" name="submit" value="Treina Força (@monstro.custoAtributo(Monstro.Atributo.STR) )" />
+</form>
+
+DEX: @monstro.getDex()
+<form action="/hue/treina/dex" method="post">
+	<input type="hidden" name="mId" value="@monstro.getId()"/>	
+    <input type="submit" name="submit" value="Treina Destreza(@monstro.custoAtributo(Monstro.Atributo.DEX) )" />
+</form>
+
+WIS: @monstro.getWis()
+<form action="/hue/treina/wis" method="post">
+	<input type="hidden" name="mId" value="@monstro.getId()"/>	
+    <input type="submit" name="submit" value="Treina Sabedoria (@monstro.custoAtributo(Monstro.Atributo.WIS) )" />
+</form>
+
+ <br><br>
+
 
 Energia sendo gerada:
 <h2>
@@ -46,7 +68,13 @@ Energia sendo gerada:
     <input type="submit" name="submit" value="VEM MONSTRO" />
 </form>
 
-<button onclick="adiciona()">FRY </button>
+<button onclick="adiciona()">FRY </button><br>
+
+
+
+
+
+
 
 <h2>
 </body>
