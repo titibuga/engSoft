@@ -9,5 +9,9 @@ GET     /                           controllers.Application.index()
 
 GET /hue							controllers.Application.teste1()
 
+GET   /monstro/:id          	controllers.Application.mostraMonstro(id: String) 
+
+POST /hue/absorve					controllers.Application.absorve()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -22,6 +22,18 @@ public class Monstro extends Model {
 	public int energia;
 	
 	
+	public static Finder<String,Monstro> find = new Finder<String,Monstro>(
+			    String.class, Monstro.class
+			  ); 
+
+	
+	public String getId()
+	{
+		return this.id;
+	}
+	
+	
+	
 	public String getNome()
 	{
 		return this.nome;
@@ -39,6 +51,11 @@ public class Monstro extends Model {
 	public void setEnergia(int energia)
 	{
 		this.energia = energia;
+	}
+	
+	public void somaEnergia(int energia)
+	{
+		this.energia += energia;
 	}
 
 }

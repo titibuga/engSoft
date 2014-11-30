@@ -13,14 +13,17 @@
 		valor = parseInt(valor) + 1; 
 	// Tranforma valor do campo hidden em numérico e adicona um
 		contador.innerHTML = valor.toString(); // Altera valor do contador
+		document.getElementById("pontos").value= valor.toString();
 	}
 
 	function ini(){
 	   var contador = document.getElementById("contador"); 
 	   contador.innerHTML = "0";
 	   var intervalID = setInterval(adiciona, 1000);
+	   document.getElementById("pontos").value='0'
 
 	}
+
 </script>
 </head>
 <body onload="ini()">
@@ -33,9 +36,18 @@ Energia: @monstro.getEnergia()
 
 Energia sendo gerada:
 <h2>
-<p id="contador"></p>
+
+<form action="/hue/absorve" method="post">
+	<p id="contador"></p>
+	<input type="hidden" name="mId" value="@monstro.getId()"/>
+	<input type="hidden" name="pontos" id="pontos"/>
+
+	
+    <input type="submit" name="submit" value="VEM MONSTRO" />
+</form>
 
 <button onclick="adiciona()">FRY </button>
+
 <h2>
 </body>
 </html>
