@@ -9,6 +9,10 @@ import javax.persistence.Id;
 @Entity
 public class Monstro extends Model {
 
+    public enum Atributo {
+        STR, DEX, WIS
+    }
+    
 	/**
 	 
 	private static final long serialVersionUID = 3799161690136050003L;
@@ -44,24 +48,64 @@ public class Monstro extends Model {
 		this.dex = dex;
 	}
 	
-	public void treinaDex()
+	public void treinaAtributo(Atributo atributo)
 	{
-		int custo = this.custoDex();
+        int custo = this.custoAtributo(atributo);
+    
 		if(this.energia >= custo)
 		{
 			this.energia -= custo;
-			this.dex++;
+			this.aumentaAtributo(atributo);
 		}
 	}
-	
-	public int custoDex()
+    
+	public int custoAtributo(Atributo atributo)
 	{
-		return this.dex*this.dex;
+		return this.getAtributo(atributo) * this.getAtributo(atributo);
 	}
 	
-	
-	
+    public int incrementaAtributo(Atributo atributo)
+    {
+        int valorAntigo = this.getAtributo(atributo);
+        int valorNovo = valorAntigo + 1;
+        this.setAtributo(atributo, valorNovo);
+    }
 
+    public int getAtributo(Atributo atributo)
+    {
+        switch (atributo) {
+            case STR:
+                return this.getStr();
+                break;
+            case DEX:
+                return this.getDex();
+                break;
+            case WIS:
+                return this.getWis();
+                break;
+            default:
+                throw new IllegalArgumentException("O atributo passado para o getAtributo não foi reconhecido.");
+                break;
+        }
+    }
+    
+    public int setAtributo(Atributo atributo, int valor)
+    {
+        switch (atributo) {
+            case STR:
+                this.setStr(valor);
+                break;
+            case DEX:
+                this.setDex(valor);
+                break;
+            case WIS:
+                this.setWis(valor);
+                break;
+            default:
+                throw new IllegalArgumentException("O atributo passado para o setAtributo não foi reconhecido.");
+                break;
+        }
+    }
 
 
 
