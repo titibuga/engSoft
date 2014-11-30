@@ -20,6 +20,7 @@ public class Monstro extends Model {
 	
 	public String nome;
 	public int energia;
+	public int dex, str, wis;
 	
 	
 	public static Finder<String,Monstro> find = new Finder<String,Monstro>(
@@ -34,6 +35,59 @@ public class Monstro extends Model {
 	
 	
 	
+	
+	
+	public int getDex() {
+		return dex;
+	}
+	public void setDex(int dex) {
+		this.dex = dex;
+	}
+	
+	public void treinaDex()
+	{
+		int custo = this.custoDex();
+		if(this.energia >= custo)
+		{
+			this.energia -= custo;
+			this.dex++;
+		}
+	}
+	
+	public int custoDex()
+	{
+		return this.dex*this.dex;
+	}
+	
+	
+	
+
+
+
+
+
+	public int getStr() {
+		return str;
+	}
+	public void setStr(int str) {
+		this.str = str;
+	}
+
+
+
+
+
+	public int getWis() {
+		return wis;
+	}
+	public void setWis(int wis) {
+		this.wis = wis;
+	}
+
+
+
+
+
 	public String getNome()
 	{
 		return this.nome;
