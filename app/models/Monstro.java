@@ -50,13 +50,30 @@ public class Monstro extends Model {
 	
 	public boolean compraHabilidade(Habilidade h)
 	{
-		if(this.getDex() >= h.getMinDex() && this.getStr() >= h.getMinStr() && this.getWis() >= h.getMinWis() && this.getEnergia() >= h.getCusto())
+		if(this.podeComprar(h))
 		{
 			this.setEnergia(this.getEnergia() - h.getCusto());
 			this.inventario.add(h);
 			return true;
 		}
 		return false;
+	}
+	
+	
+	public boolean podeComprar(Habilidade h)
+	{
+		if(this.getDex() < h.getMinDex() || this.getStr() < h.getMinStr() || this.getWis() < h.getMinWis() || this.getEnergia() < h.getCusto())
+			return false;
+		if(temHabilidade(h))
+			return false;
+		return true;
+	}
+	
+	public boolean temHabilidade(Habilidade h)
+	{
+	    for(Habilidade h2 : this.getInventario())
+	        if(h2.getId() == h.getId()) return true;
+	    return false;
 	}
 	
 	public List<Habilidade> getInventario()
@@ -71,7 +88,7 @@ public class Monstro extends Model {
 	}
 	
 	public int getDex() {
-		return dex;
+		return this.dex;
 	}
 	public void setDex(int dex) {
 		this.dex = dex;

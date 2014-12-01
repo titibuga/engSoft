@@ -50,6 +50,16 @@ public class Application extends Controller
     	
     }
     
+    public static Result compraDeHabilidade()
+    {
+    	DynamicForm data = Form.form().bindFromRequest();
+    	Monstro	mon = Monstro.find.byId(data.get("mId"));
+    	Habilidade h = Habilidade.find.byId(data.get("habId"));
+    	mon.compraHabilidade(h);
+    	mon.save();
+    	return redirect("/monstro/"+data.get("mId")+"/shop");
+    }
+    
     
     public static Result teste1()
     {

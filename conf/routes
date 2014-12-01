@@ -13,6 +13,7 @@ GET   /monstro/:id          		controllers.Application.mostraMonstro(id: String)
 
 GET /monstro/:id/shop 				controllers.Application.shop(id: String)
 POST /hue/absorve					controllers.Application.absorve()
+POST /compra                        controllers.Application.compraDeHabilidade()
 
 
 POST /hue/treina/:tipo				controllers.Application.treina(tipo: String)

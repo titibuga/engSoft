@@ -46,10 +46,6 @@
 	bAtributos[1] = [ document.getElementById("bDex") , @monstro.custoAtributo(Monstro.Atributo.DEX) ];
 	bAtributos[2] = [ document.getElementById("bWis") , @monstro.custoAtributo(Monstro.Atributo.WIS) ];
 	manutencao();
-
-
-
-
 	}
 
     </script>
@@ -82,7 +78,16 @@
     </form>
 
     <br><br>
+########################################<br>
 
+	Meu inventário:<br> <br>
+ @for( hab <- monstro.getInventario()) {
+	@hab.getNome() <br>
+}
+
+
+
+########################################<br><br>
 
     Energia sendo gerada:
     <h2>
@@ -97,7 +102,14 @@
       </form>
 
       <button onclick="adiciona()">FRY </button><br>
-      <h2>
+      </h2>
+
+
+
+
+
+
+
   </body>
 </html>
 

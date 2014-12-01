@@ -30,7 +30,10 @@ public class Habilidade extends Model {
 		this.custo = custo;
 	}
 	
-	
+	public String getId()
+	{
+		return this.id;
+	}
 	public int getMinDex() {
 		return minDex;
 	}

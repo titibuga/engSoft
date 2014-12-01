@@ -1,6 +1,9 @@
 @(monstro: Monstro, habilidades: List[Habilidade])
 
 
+@import java.math.BigInteger; var i=1;
+
+
 
 
 <html>
@@ -16,9 +19,21 @@
          @hab.getNome() <br>
          Custo: @hab.getCusto() <br>
          Dano: @hab.getDano() <br><br>
-       </h2>
+	@(i+=1)
+	
 
+    @if(monstro.podeComprar(hab)){
+	<form action="/compra" method="post">
+      <input type="hidden" name="mId" value="@monstro.getId()" />
+       <input type="hidden" name="habId" value="@hab.getId()" />
+      <input type="submit" name="submit" value="Compra"/>
+    </form>
+    } else {
+       <p> NÃO PODE COMPRAR MALUCO </p>
+        <br>
     }
+       </h2>
+  }
   </body>
 </html>
 
