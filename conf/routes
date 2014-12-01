@@ -3,13 +3,15 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                           controllers.Application.criaHabilidadesIniciais()
 
 #Teste
 
 GET /hue							controllers.Application.teste1()
 
-GET   /monstro/:id          	controllers.Application.mostraMonstro(id: String) 
+GET   /monstro/:id          		controllers.Application.mostraMonstro(id: String)
+
+GET /monstro/:id/shop 				controllers.Application.shop(id: String)
 POST /hue/absorve					controllers.Application.absorve()
 
 

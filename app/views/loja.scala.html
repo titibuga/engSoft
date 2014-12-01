@@ -1,0 +1,24 @@
+@(monstro: Monstro, habilidades: List[Habilidade])
+
+
+
+
+<html>
+  <head>
+   </head>
+  <body>
+    <h1>
+      @monstro.getNome()
+    </h1>
+
+    @for( hab <- habilidades) {
+       <h2>
+         @hab.getNome() <br>
+         Custo: @hab.getCusto() <br>
+         Dano: @hab.getDano() <br><br>
+       </h2>
+
+    }
+  </body>
+</html>
+

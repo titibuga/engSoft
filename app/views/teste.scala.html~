@@ -1,0 +1,8 @@
+@(monstro: Monstro)
+
+<html>
+<body>
+<marquee> @monstro.getNome() </marquee>
+</body>
+</html>
+

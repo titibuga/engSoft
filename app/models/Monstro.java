@@ -3,8 +3,10 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import models.Habilidade;
+import java.util.*;
 
 @Entity
 public class Monstro extends Model {
@@ -22,24 +24,51 @@ public class Monstro extends Model {
 	@Id
 	public String id;
 	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	public List<Habilidade> inventario = new ArrayList<Habilidade>();
+	
 	public String nome;
 	public int energia;
 	public int dex, str, wis;
 	
 	
-	public static Finder<String,Monstro> find = new Finder<String,Monstro>(
-			    String.class, Monstro.class
-			  ); 
+	
+	
+	public Monstro(String nome)
+	{
+		super();
+		this.nome = nome;
+		this.energia = 0;
+		this.dex = 1;
+		this.str = 1;
+		this.wis = 1;
+	}
 
+	public static Finder<String,Monstro> find = new Finder<String,Monstro>(String.class, Monstro.class); 
+
+	
+	
+	public boolean compraHabilidade(Habilidade h)
+	{
+		if(this.getDex() >= h.getMinDex() && this.getStr() >= h.getMinStr() && this.getWis() >= h.getMinWis() && this.getEnergia() >= h.getCusto())
+		{
+			this.setEnergia(this.getEnergia() - h.getCusto());
+			this.inventario.add(h);
+			return true;
+		}
+		return false;
+	}
+	
+	public List<Habilidade> getInventario()
+	{
+		return inventario;
+	}
+	
 	
 	public String getId()
 	{
 		return this.id;
 	}
-	
-	
-	
-	
 	
 	public int getDex() {
 		return dex;
@@ -104,18 +133,12 @@ public class Monstro extends Model {
     }
 
 
-
-
 	public int getStr() {
 		return str;
 	}
 	public void setStr(int str) {
 		this.str = str;
 	}
-
-
-
-
 
 	public int getWis() {
 		return wis;
@@ -124,18 +147,15 @@ public class Monstro extends Model {
 		this.wis = wis;
 	}
 
-
-
-
-
 	public String getNome()
 	{
 		return this.nome;
 	}
-	public void setNome(String nome)
+	
+	/*public void setNome(String nome)
 	{
 		this.nome = nome;
-	}
+	}*/
 	
 	public int getEnergia()
 	{
