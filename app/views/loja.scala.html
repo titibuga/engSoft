@@ -1,9 +1,6 @@
 @(monstro: Monstro, habilidades: List[Habilidade])
 
 
-@import java.math.BigInteger; var i=1;
-
-
 
 
 <html>
@@ -11,15 +8,24 @@
    </head>
   <body>
     <h1>
-      @monstro.getNome()
+      @{monstro.getNome()} 
+<form action="/monstro/@{monstro.getId()}" method="get">
+	<input type="submit" name="submit" value="Ver monstro" />
+</form>
+		
     </h1>
+	<br>
+	<h2>
+		Energia atual: @monstro.getEnergia
+		<br> STR: @{monstro.getStr()} || DEX: @{monstro.getDex()} || WIS: @{monstro.getWis()} <br>
+	</h2>
 
     @for( hab <- habilidades) {
        <h2>
          @hab.getNome() <br>
          Custo: @hab.getCusto() <br>
-         Dano: @hab.getDano() <br><br>
-	@(i+=1)
+         Dano: @hab.getDano() <br>
+		STR mínima: @{hab.getMinStr()} || DEX mínima: @{hab.getMinDex()} || WIS mínima: @{hab.getMinWis()}
 	
 
     @if(monstro.podeComprar(hab)){
@@ -29,10 +35,12 @@
       <input type="submit" name="submit" value="Compra"/>
     </form>
     } else {
-       <p> NÃO PODE COMPRAR MALUCO </p>
+       <p style="color: red"> Impossível comprar </p>
         <br>
     }
        </h2>
+
+	----------------------------------------------------------------------
   }
   </body>
 </html>

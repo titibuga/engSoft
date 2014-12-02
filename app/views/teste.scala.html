@@ -52,7 +52,8 @@
   </head>
   <body onload="ini()">
     <h1>
-      @monstro.getNome()
+      @monstro.getNome()<br>
+	  ID: @monstro.getId()
     </h1>
     Energia: @monstro.getEnergia()
     <br><br><br>
@@ -78,6 +79,8 @@
     </form>
 
     <br><br>
+
+
 ########################################<br>
 
 	Meu inventário:<br> <br>
@@ -102,7 +105,7 @@
 
 
 ########################################<br><br>
-    Energia sendo gerada:
+    Energia sendo gerada: @{monstro.getEnergiaPorUni()}/uni 
     <h2>
 
       <form action="/hue/absorve" method="post">
@@ -111,11 +114,20 @@
 	<input type="hidden" name="pontos" id="pontos"/>
 
 	
-	<input type="submit" name="submit" value="VEM MONSTRO" />
+	<input type="submit" name="submit" value="Absorver energia gerada" />
       </form>
 
-      <button onclick="adiciona(1)">FRY </button><br>
-      </h2>
+      <button onclick="adiciona(1)">Gerar 1 de energia </button><br>
+  </h2>
+
+
+<form action="/monstro/@{monstro.getId()}/shop" method="get">
+	<input type="submit" name="submit" value="Comprar habilidades" />
+</form>
+
+<form action="/monstro/@{monstro.getId()}/shop2" method="get">
+	<input type="submit" name="submit" value="Comprar geradores" />
+</form>
 
 
 

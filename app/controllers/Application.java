@@ -15,7 +15,7 @@ public class Application extends Controller
 
     public static Result index()
     {
-        return ok(index.render("Your new application is ready."));
+        return ok(index.render(""));
     }
     
     public static Result criaHabilidadesIniciais()
@@ -58,7 +58,7 @@ public class Application extends Controller
     }
     
     
-    public static Result shop(String id)
+    public static Result shop2(String id)
     {
     	Monstro mon;
     	mon = Monstro.find.byId(id);
@@ -67,7 +67,7 @@ public class Application extends Controller
     	
     }
     
-    public static Result shop2(String id)
+    public static Result shop(String id)
     {
     	Monstro mon;
     	mon = Monstro.find.byId(id);
@@ -93,15 +93,37 @@ public class Application extends Controller
     	Gerador g = Gerador.find.byId(data.get("gerId"));
     	mon.compra(g);
     	mon.save();
-    	return redirect("/monstro/"+data.get("mId")+"/shop");
+    	return redirect("/monstro/"+data.get("mId")+"/shop2");
     }
     
     
-    public static Result teste1()
+    public static Result novo()
     {
-    	Monstro jubs = new Monstro("Leo Stronda");
+    	Monstro jubs = new Monstro("Monstro Genérico");
     	jubs.save();
     	return ok(teste.render(jubs));
+    }
+    
+    public static Result falha()
+    {
+    	 return ok(index.render("Monstro com o Id passado não existe"));
+    }
+    
+    
+    public static Result login()
+    {
+    	DynamicForm data = Form.form().bindFromRequest();
+    	try  
+		 {  
+    		int mid = Integer.parseInt(data.get("mId")); 
+		 }  
+		 catch(NumberFormatException nfe)  
+		 {  
+			 return redirect("/falha");  
+		 } 
+    	
+    	
+    	return redirect("/monstro/"+data.get("mId"));
     }
     
     public static Result absorve()
@@ -118,6 +140,8 @@ public class Application extends Controller
     {
     	Monstro mon;
     	mon = Monstro.find.byId(id);
+    	if(mon == null)
+    		return redirect("/falha");
     	return ok(teste.render(mon));
     }
     
