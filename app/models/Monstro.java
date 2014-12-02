@@ -32,6 +32,9 @@ public class Monstro extends Model {
 	public int dex, str, wis;
 	
 	
+	@OneToMany(mappedBy = "mon", cascade = CascadeType.ALL)
+	public List<GeradorMonstro> geradores;
+	
 	
 	
 	public Monstro(String nome)
@@ -48,7 +51,7 @@ public class Monstro extends Model {
 
 	
 	
-	public boolean compraHabilidade(Habilidade h)
+	public boolean compra(Habilidade h)
 	{
 		if(this.podeComprar(h))
 		{
@@ -57,6 +60,80 @@ public class Monstro extends Model {
 			return true;
 		}
 		return false;
+	}
+	
+	
+	public List<GeradorMonstro> getListaGeradores()
+	{
+		return this.geradores;
+	}
+	
+	public List<Gerador> getGeradores()
+	{
+		
+		List<Gerador> geradores = new ArrayList<Gerador>();
+		
+		for(GeradorMonstro gm : this.geradores)
+		{
+			Gerador g = gm.ger;
+			if(g != null)
+				geradores.add(g);
+		}
+		return geradores;
+	}
+	
+	
+	public List<Integer> getQtdGeradores()
+	{
+		List<Integer> geradores = new ArrayList<Integer>();
+		
+		for(GeradorMonstro gm : this.geradores)
+		{
+			geradores.add(gm.getQtd());
+		}
+		return geradores;
+	}
+	
+	
+	public int getEnergiaPorUni()
+	{
+		int count = 0;
+		
+		for(GeradorMonstro gm : this.geradores)
+			count += gm.getEnergiaPorUni();
+		return count;
+		
+	}
+	
+	
+	public boolean compra(Gerador g)
+	{
+		if(!this.podeComprar(g)) return false;
+		
+		this.setEnergia(this.getEnergia() - g.getCusto());
+		
+		for(GeradorMonstro gm : this.geradores)
+		{
+			if(gm.ger.getId().equals(g.getId()))
+			{
+				gm.setQtd(gm.getQtd() + 1);
+				return true;
+			}
+		}
+		//Não tem esse gerador ainda
+		GeradorMonstro gm = new GeradorMonstro(g, this);
+		gm.save();
+		geradores.add(gm);
+		
+		
+		return true;
+	}
+	
+	
+	public boolean podeComprar(Gerador g)
+	{
+		if(g.getCusto() <= this.getEnergia()) return true;
+		else return false;
 	}
 	
 	

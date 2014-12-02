@@ -40,8 +40,34 @@ public class Application extends Controller
     	return ok(index.render("Habilidades criadas"));
     }
     
+    public static Result criaGeradoresIniciais()
+    {
+    	List<Gerador> geradores = Gerador.find.all();
+    	if(geradores.size() != 0) return ok(index.render("Já existem geradores no BD"));
+    	
+    	Gerador g = new Gerador("Gerador básico", 10, 2);
+    	g.save();
+    	
+    	g = new Gerador("Gerador não-tão-básico", 20, 5);
+    	g.save();
+    	
+    	g = new Gerador("Super Gerador básico", 100, 40);
+    	g.save();
+    	
+    	return ok(index.render("Geradores criados"));
+    }
+    
     
     public static Result shop(String id)
+    {
+    	Monstro mon;
+    	mon = Monstro.find.byId(id);
+    	List<Gerador> geradores = Gerador.find.all();
+    	return ok(loja2.render(mon, geradores));
+    	
+    }
+    
+    public static Result shop2(String id)
     {
     	Monstro mon;
     	mon = Monstro.find.byId(id);
@@ -55,7 +81,17 @@ public class Application extends Controller
     	DynamicForm data = Form.form().bindFromRequest();
     	Monstro	mon = Monstro.find.byId(data.get("mId"));
     	Habilidade h = Habilidade.find.byId(data.get("habId"));
-    	mon.compraHabilidade(h);
+    	mon.compra(h);
+    	mon.save();
+    	return redirect("/monstro/"+data.get("mId")+"/shop");
+    }
+    
+    public static Result compraDeGerador()
+    {
+    	DynamicForm data = Form.form().bindFromRequest();
+    	Monstro	mon = Monstro.find.byId(data.get("mId"));
+    	Gerador g = Gerador.find.byId(data.get("gerId"));
+    	mon.compra(g);
     	mon.save();
     	return redirect("/monstro/"+data.get("mId")+"/shop");
     }

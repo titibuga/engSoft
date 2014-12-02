@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.criaHabilidadesIniciais()
+GET /geradores						controllers.Application.criaGeradoresIniciais()
 
 #Teste
 
@@ -12,8 +13,10 @@ GET /hue							controllers.Application.teste1()
 GET   /monstro/:id          		controllers.Application.mostraMonstro(id: String)
 
 GET /monstro/:id/shop 				controllers.Application.shop(id: String)
+GET /monstro/:id/shop2 				controllers.Application.shop2(id: String)
 POST /hue/absorve					controllers.Application.absorve()
 POST /compra                        controllers.Application.compraDeHabilidade()
+POST /compra2						controllers.Application.compraDeGerador()
 
 
 POST /hue/treina/:tipo				controllers.Application.treina(tipo: String)

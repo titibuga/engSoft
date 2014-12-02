@@ -3,6 +3,21 @@
 
 # --- !Ups
 
+create table gerador (
+  id                        varchar(255) not null,
+  nome                      varchar(255),
+  custo                     integer,
+  energia_por_uni           integer,
+  constraint pk_gerador primary key (id))
+;
+
+create table gerador_monstro (
+  ger_id                    varchar(255),
+  mon_id                    varchar(255),
+  qtd                       integer,
+  constraint pk_gerador_monstro primary key (ger_id, mon_id))
+;
+
 create table habilidade (
   id                        varchar(255) not null,
   min_dex                   integer,
@@ -30,10 +45,18 @@ create table monstro_habilidade (
   habilidade_id                  varchar(255) not null,
   constraint pk_monstro_habilidade primary key (monstro_id, habilidade_id))
 ;
+create sequence gerador_seq;
+
+create sequence gerador_monstro_seq;
+
 create sequence habilidade_seq;
 
 create sequence monstro_seq;
 
+alter table gerador_monstro add constraint fk_gerador_monstro_mon_1 foreign key (mon_id) references monstro (id) on delete restrict on update restrict;
+create index ix_gerador_monstro_mon_1 on gerador_monstro (mon_id);
+alter table gerador_monstro add constraint fk_gerador_monstro_ger_2 foreign key (ger_id) references gerador (id) on delete restrict on update restrict;
+create index ix_gerador_monstro_ger_2 on gerador_monstro (ger_id);
 
 
 
@@ -45,6 +68,10 @@ alter table monstro_habilidade add constraint fk_monstro_habilidade_habilid_02 f
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists gerador;
+
+drop table if exists gerador_monstro;
+
 drop table if exists habilidade;
 
 drop table if exists monstro;
@@ -52,6 +79,10 @@ drop table if exists monstro;
 drop table if exists monstro_habilidade;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists gerador_seq;
+
+drop sequence if exists gerador_monstro_seq;
 
 drop sequence if exists habilidade_seq;
 

@@ -1,0 +1,35 @@
+@(monstro: Monstro, geradores: List[Gerador])
+
+
+
+
+
+<html>
+  <head>
+   </head>
+  <body>
+    <h1>
+      @monstro.getNome()
+    </h1>
+
+    @for( ger <- geradores) {
+       <h2>
+         @ger.getNome() <br>
+         Custo: @ger.getCusto() <br>
+         Energia/Unidade de tempo: @ger.getEnergiaPorUni() <br><br>
+
+    @if(monstro.podeComprar(ger)){
+	<form action="/compra2" method="post">
+      <input type="hidden" name="mId" value="@monstro.getId()" />
+       <input type="hidden" name="gerId" value="@ger.getId()" />
+      <input type="submit" name="submit" value="Compra"/>
+    </form>
+    } else {
+       <p> NÃO PODE COMPRAR MALUCO </p>
+        <br>
+    }
+       </h2>
+  }
+  </body>
+</html>
+

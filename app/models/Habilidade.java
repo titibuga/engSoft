@@ -24,6 +24,7 @@ public class Habilidade extends Model {
 	
 	public Habilidade(String nome, int dano, int custo)
 	{
+		super();
 		this.minDex = this.minStr = this.minWis = 0;
 		this.nome = nome;
 		this.dano = dano;
