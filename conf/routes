@@ -3,17 +3,21 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.criaHabilidadesIniciais()
+GET /habilidades                    controllers.Application.criaHabilidadesIniciais()
+GET /geradores						controllers.Application.criaGeradoresIniciais()
 
-#Teste
 
-GET /hue							controllers.Application.teste1()
+GET /								controllers.Application.index()
+GET /falha							controllers.Application.falha()
 
+GET /novo							controllers.Application.novo()
 GET   /monstro/:id          		controllers.Application.mostraMonstro(id: String)
-
 GET /monstro/:id/shop 				controllers.Application.shop(id: String)
+GET /monstro/:id/shop2 				controllers.Application.shop2(id: String)
 POST /hue/absorve					controllers.Application.absorve()
 POST /compra                        controllers.Application.compraDeHabilidade()
+POST /compra2						controllers.Application.compraDeGerador()
+POST /login							controllers.Application.login()
 
 
 POST /hue/treina/:tipo				controllers.Application.treina(tipo: String)

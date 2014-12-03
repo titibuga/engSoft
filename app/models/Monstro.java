@@ -62,7 +62,13 @@ public class Monstro extends Model {
      */
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	public List<Habilidade> inventario = new ArrayList<Habilidade>();
-
+    /** 
+     * The list of Generators contains all the Generators that have been 
+     * purchased andare currently active, generating more energy for the player.
+     */
+    @OneToMany(mappedBy = "mon", cascade = CascadeType.ALL)
+    public List<GeradorMonstro> geradores;
+    
     /** 
      * The Monster's name, which may be displayed at the top of the screen.
      */
@@ -83,6 +89,7 @@ public class Monstro extends Model {
      * The Wisdom attribute.
      */
     public int wis;
+    
 	
 	// Constructor
 	public Monstro(String nome) {
@@ -132,7 +139,7 @@ public class Monstro extends Model {
 	}
 	
     /** 
-     * Check if the Monster has the given skill in its inventory/
+     * Check if the Monster has the given skill in its inventory.
      * @param skill The skill to check.
      * @return @p true if the skill is present, @p false otherwise.
      */
@@ -145,6 +152,107 @@ public class Monstro extends Model {
 	    return false;
 	}
 	
+    
+    // Generators
+    /** 
+     * Returns a list of all MonsterGeneratorLinks linked to this Monster. This
+     * list refers only to purchased Generators, not all Generators.
+     */
+    public List<GeradorMonstro> getListaGeradores() {
+        return this.geradores;
+    }
+    
+    /** 
+     * Returns a list of all Generators linked to this Monster via a 
+     * MonsterGeneratorLink. The list contains one generator of each type, and
+     * therefore ignores their quantities. Also, the list refers only to
+     * purchased Generators, not all Generators.
+     */
+    public List<Gerador> getGeradores() {
+        List<Gerador> geradores = new ArrayList<Gerador>();
+        
+        for (GeradorMonstro gm : this.geradores) {
+            Gerador g = gm.ger;
+            if (g != null) {
+                geradores.add(g);
+            }
+        }
+        return geradores;
+    }
+    
+    /** 
+     * Returns a list containing numbers that represent how many Generators of
+     * each type the Monster has. This list is indexed respectively with the
+     * list obtained by calling this Monster's @p getListaGeradores method, so 
+     * its nth item corresponds to the getListaGeradores' list nth item.
+     *
+     * @see getListaGeradores
+     */
+    public List<Integer> getQtdGeradores() {
+        List<Integer> geradores = new ArrayList<Integer>();
+        
+        for (GeradorMonstro gm : this.geradores) {
+            geradores.add(gm.getQtd());
+        }
+        return geradores;
+    }
+        
+    /** 
+     * Returns the amount of Energy the Generators should give the Monster at 
+     * each time interval, taking into account which Generators have been 
+     * purchased, how many and how much energy each one generates.
+     */
+    public int getEnergiaPorUni() {
+        int count = 0;
+        
+        for (GeradorMonstro gm : this.geradores) {
+            count += gm.getEnergiaPorUni();
+        }
+        return count;
+    }
+        
+    /** 
+     * Checks if the Monster is able to buy the given Generator. If it is, 
+     * subtracts the appropriate value from the Monster's energy and adds one 
+     * more of that Generator to the Monster's stash, taking into account the 
+     * appropriate actions if the Monster has never purchased a Generator of
+     * that kind before.
+     */
+    public boolean compra(Gerador g) {
+        if (!this.podeComprar(g)){
+            return false;
+        }
+        
+        this.setEnergia(this.getEnergia() - g.getCusto());
+        
+        for (GeradorMonstro gm : this.geradores) {
+            if (gm.ger.getId().equals(g.getId())) {
+                gm.setQtd(gm.getQtd() + 1);
+                return true;
+            }
+        }
+        //Não tem esse gerador ainda
+        GeradorMonstro gm = new GeradorMonstro(g, this);
+        gm.save();
+        geradores.add(gm);
+        
+        
+        return true;
+    }
+        
+    /** 
+     * Checks whether or not the Monster is able to buy the given Generator
+     * based on the Monster's available energy and the Generator's cost.
+     */
+    public boolean podeComprar(Gerador g) {
+        if (g.getCusto() <= this.getEnergia()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+        
     // Attributes
     /** 
      * Checks if the Mosnter has enough energy to increase the desired 
