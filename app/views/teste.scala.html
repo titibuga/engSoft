@@ -58,20 +58,20 @@
     <br><br><br>
 
     Atributos: <br><br>
-    STR: @monstro.getStr()
+    STR: @monstro.getAtributo(Monstro.Atributo.STR)
 
     <form action="/hue/treina/str" method="post">
       <input type="hidden" name="mId" value="@monstro.getId()" />	
       <input type="submit" name="submit" value="Treina Força (@monstro.custoAtributo(Monstro.Atributo.STR) )" id="bStr"/>
     </form>
 
-    DEX: @monstro.getDex()
+    DEX: @monstro.getAtributo(Monstro.Atributo.DEX)
     <form action="/hue/treina/dex" method="post">
       <input type="hidden" name="mId" value="@monstro.getId()"/>	
       <input type="submit" name="submit" value="Treina Destreza(@monstro.custoAtributo(Monstro.Atributo.DEX) )"  id="bDex"/>
     </form>
 
-    WIS: @monstro.getWis()
+    WIS: @monstro.getAtributo(Monstro.Atributo.WIS)
     <form action="/hue/treina/wis" method="post">
       <input type="hidden" name="mId" value="@monstro.getId()" />	
       <input type="submit" name="submit" value="Treina Sabedoria (@monstro.custoAtributo(Monstro.Atributo.WIS) )" id="bWis"/>
