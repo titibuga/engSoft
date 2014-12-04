@@ -1,0 +1,172 @@
+@(monster: Monster)
+
+<html>
+  <head>
+    <script>
+
+      var attributes = [];
+      var energyPerInstant = @monster.totalEnergyPerInstant();
+
+      function manutencao()
+      {
+          for(i = 0; i < attributes.length; i++)
+          {
+        if(@monster.getEnergy() >= attributes[i][1])
+        {
+            attributes[i][0].disabled = false;
+        }
+        else
+        {
+            attributes[i][0].disabled = true;
+        }
+        }
+        add(energyPerInstant);
+
+        console.log(energyPerInstant);
+	}
+
+
+
+	function add( x) {
+        var count = document.getElementById("contador");
+        // Define objeto
+        var value = count.innerHTML; // Pega valor do campo hidden
+        value = parseInt(value) + x;
+        // Tranforma valor do campo hidden em numérico e adicona um
+        count.innerHTML = value.toString(); // Altera valor do contador
+        document.getElementById("pontos").value = value.toString();
+	}
+
+
+	function init(){
+        var count = document.getElementById("contador");
+        count.innerHTML = "0";
+        var intervalID = setInterval(manutencao, 1200);
+        document.getElementById("pontos").value='0';
+        attributes[0] = [ document.getElementById("bStr") , @monster.attributeCost(Monster.Attribute.STRENGTH) ];
+        attributes[1] = [ document.getElementById("bDex") , @monster.attributeCost(Monster.Attribute.DEXTERITY) ];
+        attributes[2] = [ document.getElementById("bWis") , @monster.attributeCost(Monster.Attribute.WISDOM) ];
+        manutencao();
+	}
+
+    </script>
+  </head>
+  <body onload="init()">
+    <h1>
+      @monster.getName()<br>
+	  ID: @monster.getId()
+    </h1>
+  <pre>
+    
+               _________
+              |#########|
+              |#########|
+              |#########|
+              |#########|
+              |#########|
+            __|_________|__
+              |     '_ ' \
+              F     (.) (.)--.__
+             /                  `.
+            J                    |
+            F       ._          .'
+           J          `-.____.-'
+           F           \
+          J             \
+          |              \---
+          |  .  `.        \_E
+          |   `.  `.       L
+ ,,,      |     `.  `.     |
+\VVV'     |       `.  `    |
+ \W|      J         ```    F
+  `.    .' \              /
+    `--'    )    ____.-  '
+           /    /   `.   `.  .-
+          /   .'      `.   `' /
+          `.  \         `.   /
+            `._|          `-'
+    
+  </pre>
+    
+    Energia: @monster.getEnergy()
+    <br><br><br>
+
+    Atributos: <br><br>
+    STR: @monster.getAttribute(Monster.Attribute.STRENGTH)
+    <form action="/init/train/str" method="post">
+      <input type="hidden" name="mId" value="@monster.getId()" />	
+      <input type="submit" name="submit" value="Treina Força (@monster.attributeCost(Monster.Attribute.STRENGTH) )" id="bStr"/>
+    </form>
+
+    DEX: @monster.getAttribute(Monster.Attribute.DEXTERITY)
+    <form action="/init/train/dex" method="post">
+      <input type="hidden" name="mId" value="@monster.getId()"/>	
+      <input type="submit" name="submit" value="Treina Destreza(@monster.attributeCost(Monster.Attribute.DEXTERITY) )"  id="bDex"/>
+    </form>
+
+    WIS: @monster.getAttribute(Monster.Attribute.WISDOM)
+    <form action="/init/train/wis" method="post">
+      <input type="hidden" name="mId" value="@monster.getId()" />	
+      <input type="submit" name="submit" value="Treina Sabedoria (@monster.attributeCost(Monster.Attribute.WISDOM) )" id="bWis"/>
+    </form>
+
+    <br><br>
+
+
+########################################<br>
+
+	Meu inventário:<br> <br>
+ @for( skill <- monster.getInventory()) {
+	@skill.getName() <br>
+}
+
+
+
+########################################<br><br>
+
+########################################<br>
+
+	Meus geradores:<br>
+    -------------------------------<br>
+ @for( link <- monster.getGeneratorLinks()) {
+	@link.getGenerator().getName() <br>
+    Quantidade: @link.getAmount() <br>
+    ------------------------------- <br>
+}
+
+
+
+########################################<br><br>
+    Energia sendo gerada: @{monster.totalEnergyPerInstant()}/s
+    <h2>
+
+      <form action="/init/absorve" method="post">
+	<p id="contador"></p>
+	<input type="hidden" name="mId" value="@monster.getId()"/>
+	<input type="hidden" name="pontos" id="pontos"/>
+
+	
+	<input type="submit" name="submit" value="Absorver energia gerada" />
+      </form>
+
+      <button onclick="add(1)">Gerar 1 de energia </button><br>
+  </h2>
+
+
+<form action="/monster/@{monster.getId()}/skillShop" method="get">
+	<input type="submit" name="submit" value="Comprar habilidades" />
+</form>
+
+<form action="/monster/@{monster.getId()}/generatorShop" method="get">
+	<input type="submit" name="submit" value="Comprar geradores" />
+</form>
+
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,47 @@
+@(monster: Monster, skills: List[Skill])
+
+
+
+
+<html>
+  <head>
+   </head>
+  <body>
+    <h1>
+      @{monster.getName()}
+<form action="/monster/@{monster.getId()}" method="get">
+	<input type="submit" name="submit" value="Ver monstro" />
+</form>
+		
+    </h1>
+	<br>
+	<h2>
+		Energia atual: @monster.getEnergy
+		<br> STR: @{monster.getAttribute(Monster.Attribute.STRENGTH)} || DEX: @{monster.getAttribute(Monster.Attribute.DEXTERITY)} || WIS: @{monster.getAttribute(Monster.Attribute.WISDOM)} <br>
+	</h2>
+
+    @for( skill <- skills) {
+       <h2>
+         @skill.getName() <br>
+         Custo: @skill.getCost() <br>
+         Dano: @skill.getDamage() <br>
+		STR mínima: @{skill.getRequiredStrength()} || DEX mínima: @{skill.getRequiredDexterity()} || WIS mínima: @{skill.getRequiredWisdom()}
+	
+
+    @if(monster.mayPurchase(skill)){
+	<form action="/skillPurchase" method="post">
+      <input type="hidden" name="mId" value="@monster.getId()" />
+       <input type="hidden" name="habId" value="@skill.getId()" />
+      <input type="submit" name="submit" value="Compra"/>
+    </form>
+    } else {
+       <p style="color: red"> Impossível comprar </p>
+        <br>
+    }
+       </h2>
+
+	----------------------------------------------------------------------
+  }
+  </body>
+</html>
+

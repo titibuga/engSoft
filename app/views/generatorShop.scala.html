@@ -1,0 +1,38 @@
+@(monster: Monster, generators: List[Generator])
+
+
+<html>
+  <head>
+   </head>
+  <body>
+    <h1>
+      @{monster.getName()} <br>
+<form action="/monster/@{monster.getId()}" method="get">
+	<input type="submit" name="submit" value="Ver monstro" />
+</form>
+	Sua energia: @monster.getEnergy()
+	<br>
+
+    </h1>
+
+    @for( generator <- generators) {
+       <h2>
+         @generator.getName() <br>
+         Custo: @generator.getCost() <br>
+         Energia/Unidade de tempo: @generator.getEnergyPerInstant() <br>
+
+    @if(monster.mayPurchase(generator)){
+	<form action="/generatorPurchase" method="post">
+      <input type="hidden" name="mId" value="@monster.getId()" />
+       <input type="hidden" name="gerId" value="@generator.getId()" />
+      <input type="submit" name="submit" value="Compra"/>
+    </form>
+    } else {
+       <p style="color: red"> Sem energia o suficiente </p>
+        <br>
+    }
+       </h2>
+  }
+  </body>
+</html>
+
