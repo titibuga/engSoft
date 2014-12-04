@@ -3,24 +3,21 @@
 # ~~~~
 
 # Home page
-GET /habilidades                    controllers.Application.criaHabilidadesIniciais()
-GET /geradores						controllers.Application.criaGeradoresIniciais()
-
 
 GET /								controllers.Application.index()
-GET /falha							controllers.Application.falha()
+GET /fail							controllers.Application.fail()
 
-GET /novo							controllers.Application.novo()
-GET   /monstro/:id          		controllers.Application.mostraMonstro(id: String)
-GET /monstro/:id/shop 				controllers.Application.shop(id: String)
-GET /monstro/:id/shop2 				controllers.Application.shop2(id: String)
-POST /hue/absorve					controllers.Application.absorve()
-POST /compra                        controllers.Application.compraDeHabilidade()
-POST /compra2						controllers.Application.compraDeGerador()
+GET /new							controllers.Application.newMonster()
+GET   /monster/:id          		controllers.Application.renderMonster(id: String)
+GET /monster/:id/skillShop 				controllers.Application.skillShop(id: String)
+GET /monster/:id/generatorShop 				controllers.Application.generatorShop(id: String)
+POST /init/absorve					controllers.Application.absorb()
+POST /skillPurchase                        controllers.Application.purchaseSkill()
+POST /generatorPurchase						controllers.Application.purchaseGenerator()
 POST /login							controllers.Application.login()
 
 
-POST /hue/treina/:tipo				controllers.Application.treina(tipo: String)
+POST /init/train/:type				controllers.Application.train(type: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

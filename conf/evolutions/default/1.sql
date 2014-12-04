@@ -3,88 +3,88 @@
 
 # --- !Ups
 
-create table gerador (
+create table generator (
   id                        varchar(255) not null,
-  nome                      varchar(255),
-  custo                     integer,
-  energia_por_uni           integer,
-  constraint pk_gerador primary key (id))
+  name                      varchar(255),
+  cost                      integer,
+  energy_per_instant        integer,
+  constraint pk_generator primary key (id))
 ;
 
-create table gerador_monstro (
-  ger_id                    varchar(255),
-  mon_id                    varchar(255),
-  qtd                       integer,
-  constraint pk_gerador_monstro primary key (ger_id, mon_id))
-;
-
-create table habilidade (
+create table monster (
   id                        varchar(255) not null,
-  min_dex                   integer,
-  min_wis                   integer,
-  min_str                   integer,
-  dano                      integer,
-  custo                     integer,
-  nome                      varchar(255),
-  constraint pk_habilidade primary key (id))
+  name                      varchar(255),
+  stored_energy             integer,
+  dexterity                 integer,
+  strength                  integer,
+  wisdom                    integer,
+  constraint pk_monster primary key (id))
 ;
 
-create table monstro (
+create table monster_generator_link (
+  generator_id              varchar(255),
+  monster_id                varchar(255),
+  amount                    integer,
+  constraint pk_monster_generator_link primary key (generator_id, monster_id))
+;
+
+create table skill (
   id                        varchar(255) not null,
-  nome                      varchar(255),
-  energia                   integer,
-  dex                       integer,
-  str                       integer,
-  wis                       integer,
-  constraint pk_monstro primary key (id))
+  required_dexterity        integer,
+  required_wisdom           integer,
+  required_strength         integer,
+  damage                    integer,
+  cost                      integer,
+  name                      varchar(255),
+  constraint pk_skill primary key (id))
 ;
 
 
-create table monstro_habilidade (
-  monstro_id                     varchar(255) not null,
-  habilidade_id                  varchar(255) not null,
-  constraint pk_monstro_habilidade primary key (monstro_id, habilidade_id))
+create table monster_skill (
+  monster_id                     varchar(255) not null,
+  skill_id                       varchar(255) not null,
+  constraint pk_monster_skill primary key (monster_id, skill_id))
 ;
-create sequence gerador_seq;
+create sequence generator_seq;
 
-create sequence gerador_monstro_seq;
+create sequence monster_seq;
 
-create sequence habilidade_seq;
+create sequence monster_generator_link_seq;
 
-create sequence monstro_seq;
+create sequence skill_seq;
 
-alter table gerador_monstro add constraint fk_gerador_monstro_mon_1 foreign key (mon_id) references monstro (id) on delete restrict on update restrict;
-create index ix_gerador_monstro_mon_1 on gerador_monstro (mon_id);
-alter table gerador_monstro add constraint fk_gerador_monstro_ger_2 foreign key (ger_id) references gerador (id) on delete restrict on update restrict;
-create index ix_gerador_monstro_ger_2 on gerador_monstro (ger_id);
+alter table monster_generator_link add constraint fk_monster_generator_link_mon_1 foreign key (monster_id) references monster (id) on delete restrict on update restrict;
+create index ix_monster_generator_link_mon_1 on monster_generator_link (monster_id);
+alter table monster_generator_link add constraint fk_monster_generator_link_gene_2 foreign key (generator_id) references generator (id) on delete restrict on update restrict;
+create index ix_monster_generator_link_gene_2 on monster_generator_link (generator_id);
 
 
 
-alter table monstro_habilidade add constraint fk_monstro_habilidade_monstro_01 foreign key (monstro_id) references monstro (id) on delete restrict on update restrict;
+alter table monster_skill add constraint fk_monster_skill_monster_01 foreign key (monster_id) references monster (id) on delete restrict on update restrict;
 
-alter table monstro_habilidade add constraint fk_monstro_habilidade_habilid_02 foreign key (habilidade_id) references habilidade (id) on delete restrict on update restrict;
+alter table monster_skill add constraint fk_monster_skill_skill_02 foreign key (skill_id) references skill (id) on delete restrict on update restrict;
 
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table if exists gerador;
+drop table if exists generator;
 
-drop table if exists gerador_monstro;
+drop table if exists monster;
 
-drop table if exists habilidade;
+drop table if exists monster_skill;
 
-drop table if exists monstro;
+drop table if exists monster_generator_link;
 
-drop table if exists monstro_habilidade;
+drop table if exists skill;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
-drop sequence if exists gerador_seq;
+drop sequence if exists generator_seq;
 
-drop sequence if exists gerador_monstro_seq;
+drop sequence if exists monster_seq;
 
-drop sequence if exists habilidade_seq;
+drop sequence if exists monster_generator_link_seq;
 
-drop sequence if exists monstro_seq;
+drop sequence if exists skill_seq;
 

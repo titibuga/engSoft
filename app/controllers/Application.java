@@ -41,161 +41,90 @@ public class Application extends Controller  {
      * The main method called when the application starts.
      */
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
-    }
-    
-    /** 
-     * Creates a set of default initial Skills to display at the shop.
-     */
-    public static Result criaHabilidadesIniciais() {
-    	List<Habilidade> habilidades = Habilidade.find.all();
-        Habilidade h;
-
-    	if (habilidades.size() != 0) {
-            return ok(index.render("Já existem habilidades no BD"));
-        }
-    	
-    	h = new Habilidade("Patada", 10, 10);
-    	h.save();
-    	
-    	h = new Habilidade("Patada inteligente", 10, 20);
-    	h.setMinWis(10);
-    	h.save();
-    	
-    	h = new Habilidade("VEM MONSTRO", 666, 20);
-    	h.setMinStr(50);
-    	h.save();
-    	
-    	return ok(index.render("Habilidades criadas"));
-    }
-    
-    /**
-     * Creates a set of default initial Generators to display at the shop.
-     */
-    public static Result criaGeradoresIniciais() {
-        List<Gerador> geradores = Gerador.find.all();
-        Gerador g;
-        
-        if (geradores.size() != 0) {
-            return ok(index.render("Já existem geradores no BD"));
-        }
-        
-        g = new Gerador("Gerador básico", 10, 2);
-        g.save();
-        
-        g = new Gerador("Gerador não-tão-básico", 20, 5);
-        g.save();
-        
-        g = new Gerador("Super Gerador básico", 100, 40);
-        g.save();
-        
-        return ok(index.render("Geradores criados"));
-    }
-    
-    
-    /** 
-     * Executes the purchase of a skill, updates the database and the local 
-     * objects.
-     */
-    public static Result compraDeHabilidade() {
-        DynamicForm data = Form.form().bindFromRequest();
-        Habilidade h = Habilidade.find.byId(data.get("habId"));
-        Monstro mon = Monstro.find.byId(data.get("mId"));
-
-        mon.compraHabilidade(h);
-        mon.save();
-
-        return redirect("/monstro/"+data.get("mId")+"/shop");
+        return ok(index.render("PREPARE FOR ADVENTUUUUUUUURE!!"));
     }
 
     /** 
      * The method used to render the Skills shop.
      */
-    public static Result shop(String id) {
-    	Monstro mon = Monstro.find.byId(id);
-        List<Habilidade> habilidades = Habilidade.find.all();
-    	return ok(loja.render(mon, habilidades));
+    public static Result skillShop(String id) {
+    	Monster monster = Monster.find.byId(id);
+        List<Skill> skills = Skill.find.all();
+
+        createInitialSkills();
+
+    	return ok(skillShop.render(monster, skills));
     }
 
     /**
      * The method used to render the Generators shop.
      */
-    public static Result shop2(String id) {
-        Monstro mon = Monstro.find.byId(id);
-        List<Gerador> geradores = Gerador.find.all();
+    public static Result generatorShop(String id) {
+        Monster monster = Monster.find.byId(id);
+        List<Generator> generators = Generator.find.all();
+
+        createInitialGenerators();
         
-        return ok(loja2.render(mon, geradores));
-    }
-
-    /**
-     * Renders a test screen.
-     */
-    public static Result teste1() {
-    	Monstro mon = new Monstro("Leo Stronda");
-
-    	mon.save();
-
-    	return ok(teste.render(mon));
+        return ok(generatorShop.render(monster, generators));
     }
 
     /** 
      * Executes the absorption of energy from the pool to the monster.
      */
-    public static Result absorve() {
+    public static Result absorb() {
     	DynamicForm dynamicForm = Form.form().bindFromRequest();
-    	Monstro mon = Monstro.find.byId(dynamicForm.get("mId"));
+    	Monster monster = Monster.find.byId(dynamicForm.get("mId"));
 
-    	mon.somaEnergia(Integer.parseInt(dynamicForm.get("pontos")));
-    	mon.save();
+    	monster.addEnergy(Integer.parseInt(dynamicForm.get("pontos")));
+    	monster.save();
 
-    	return redirect("/monstro/"+dynamicForm.get("mId"));
+    	return redirect("/monster/"+dynamicForm.get("mId"));
     }
     
     /** 
      * Handles the request to purchase a Skill.
      */
-    public static Result compraDeHabilidade() {
+    public static Result purchaseSkill() {
         DynamicForm data = Form.form().bindFromRequest();
-        Monstro	mon = Monstro.find.byId(data.get("mId"));
-        Habilidade h = Habilidade.find.byId(data.get("habId"));
+        Monster	monster = Monster.find.byId(data.get("mId"));
+        Skill skill = Skill.find.byId(data.get("habId"));
         
-        mon.compra(h);
-        mon.save();
+        monster.purchase(skill);
+        monster.save();
         
-        return redirect("/monstro/"+data.get("mId")+"/shop");
+        return redirect("/monster/"+data.get("mId")+"/skillShop");
     }
 
     /**
      * Handles the request to purchase a Generator.
      */
-    public static Result compraDeGerador() {
+    public static Result purchaseGenerator() {
         DynamicForm data = Form.form().bindFromRequest();
-        Monstro	mon = Monstro.find.byId(data.get("mId"));
-        Gerador g = Gerador.find.byId(data.get("gerId"));
+        Monster	monster = Monster.find.byId(data.get("mId"));
+        Generator generator = Generator.find.byId(data.get("gerId"));
         
-        mon.compra(g);
-        mon.save();
+        monster.purchase(generator);
+        monster.save();
         
-        return redirect("/monstro/"+data.get("mId")+"/shop2");
+        return redirect("/monster/"+data.get("mId")+"/generatorShop");
     }
     
     /**
      * Creates a new Monster.
      */
-    public static Result novo() {
-        Monstro mon = new Monstro("Monstro Genérico");
+    public static Result newMonster() {
+        Monster monster = new Monster("Skull Greymon");
         
-        mon.save();
+        monster.save();
         
-        return ok(teste.render(mon));
+        return ok(init.render(monster));
     }
     
     /**
-     * Default scenario for when the rendering of another screen fails for some
-     * reason.
+     * Default scenario for when the rendering of another screen fails.
      */
-    public static Result falha() {
-        return ok(index.render("Monstro com o Id passado não existe"));
+    public static Result fail() {
+        return ok(index.render("There is no monster with the given id."));
     }
     
     /** 
@@ -207,41 +136,81 @@ public class Application extends Controller  {
         try {
             int mid = Integer.parseInt(data.get("mId"));
         } catch(NumberFormatException nfe) {
-            return redirect("/falha");
+            return redirect("/fail");
         } 
         
-        return redirect("/monstro/"+data.get("mId"));
+        return redirect("/monster/"+data.get("mId"));
     }
     
     
     /** 
      * Renders the monster.
      */
-    public static Result mostraMonstro(String id) {
-    	Monstro mon = Monstro.find.byId(id);;
-    	if(mon == null)
-    		return redirect("/falha");
-    	return ok(teste.render(mon));
+    public static Result renderMonster(String id) {
+    	Monster monster = Monster.find.byId(id);;
+    	if(monster == null)
+    		return redirect("/fail");
+    	return ok(init.render(monster));
     }
     
     /** 
-     * Attempts to train the Monster's given attribute (must check if the
+     * Attempts to train the Monster'skill given attribute (must check if the
      * Monster is able to train that attribute first).
      */
-    public static Result treina(String tipo) {
+    public static Result train(String type) {
     	DynamicForm data = Form.form().bindFromRequest();
-    	Monstro	mon = Monstro.find.byId(data.get("mId"));
+    	Monster	monster = Monster.find.byId(data.get("mId"));
 
-    	if (tipo.equals("str")) {
-    		mon.treinaAtributo(Monstro.Atributo.STR);
-        } else if (tipo.equals("dex")) {
-    		mon.treinaAtributo(Monstro.Atributo.DEX);
-    	} else if (tipo.equals("wis")) {
-    		mon.treinaAtributo(Monstro.Atributo.WIS);
+    	if (type.equals("str")) {
+    		monster.trainAttribute(Monster.Attribute.STRENGTH);
+        } else if (type.equals("dex")) {
+    		monster.trainAttribute(Monster.Attribute.DEXTERITY);
+    	} else if (type.equals("wis")) {
+    		monster.trainAttribute(Monster.Attribute.WISDOM);
         }
 
-    	mon.save();
+    	monster.save();
     	
-    	return redirect("/monstro/"+data.get("mId"));
+    	return redirect("/monster/"+data.get("mId"));
+    }
+
+    /** 
+     * Creates a set of default initial Skills to display at the shop.
+     */
+    private static void createInitialSkills() {
+        List<Skill> skills = Skill.find.all();
+        Skill skill;
+
+        if (skills.size() == 0) {
+            skill = new Skill("Tackle", 10, 10);
+            skill.save();
+            
+            skill = new Skill("Quick Attack", 10, 20);
+            skill.setRequiredDexterity(10);
+            skill.save();
+            
+            skill = new Skill("Hyper Beam", 666, 20);
+            skill.setRequiredWisdom(50);
+            skill.save();
+        }
+    }
+    
+    /**
+     * Creates a set of default initial Generators to display at the shop.
+     */
+    private static void createInitialGenerators() {
+        List<Generator> generators = Generator.find.all();
+        Generator generator;
+        
+        if (generators.size() == 0) {
+            generator = new Generator("Wind Turbine", 10, 2);
+            generator.save();
+            
+            generator = new Generator("Solar Panel", 20, 5);
+            generator.save();
+            
+            generator = new Generator("Nuclear Station", 100, 40);
+            generator.save();
+        }
     }
 }
