@@ -172,9 +172,7 @@ public class Monster extends Model {
         
         for (MonsterGeneratorLink link : this.generators) {
             Generator generator = link.generator;
-            if (generator != null) {
-                generators.add(generator);
-            }
+            generators.add(generator);
         }
         return generators;
     }

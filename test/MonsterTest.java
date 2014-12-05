@@ -10,20 +10,10 @@ import java.util.*;
 
 import models.Monster;
 import models.Skill;
+import models.Generator;
+import models.MonsterGeneratorLink;
 
 public class MonsterTest {
-	
-	@Test
-    public void create() {
-        running(fakeApplication(), new Runnable() {
-            public void run() {
-                Monster task = new Monster("Jubileu");
-                task.setEnergy(42);
-                task.save();
-                assertThat(task.id).isNotNull();
-            } 
-        });
-    }
 
     @Test
     public void monsterShouldNotPurchaseExpensiveSkills() {
@@ -145,19 +135,130 @@ public class MonsterTest {
     }
 
     @Test
-    public void stuffShouldHappen() {
+    public void monsterShouldCreateGeneratorLinkOnPurchase() {
         running(fakeApplication(), new Runnable() {
             public void run() {
                 // Given
                 Monster monster = new Monster("Name");
+                Generator generator = new Generator("Name", 0, 0);
+                generator.save();
+                monster.save();
 
                 // When
+                monster.purchase(generator);
+                List<MonsterGeneratorLink> list = monster.getGeneratorLinks();
 
                 // Then
-                assertTrue(true);
+                assertTrue(list.size() > 0);
             } 
         });
     }
+
+    @Test
+    public void numberOfGeneratorTypesShouldIncreaseOnPurchase() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                // Given
+                Monster monster = new Monster("Name");
+                Generator generator = new Generator("Name", 0, 0);
+                generator.save();
+                monster.save();
+
+                // When
+                monster.purchase(generator);
+                List<Generator> list = monster.getGenerators();
+
+                // Then
+                assertTrue(list.size() > 0);
+            } 
+        });
+    }
+
+    @Test
+    public void amountOfGeneratorTypesShouldIncreaseOnPurchase() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                // Given
+                Monster monster = new Monster("Name");
+                Generator generator = new Generator("Name", 0, 0);
+                generator.save();
+                monster.save();
+
+                // When
+                monster.purchase(generator);
+
+                List<Integer> list = monster.getGeneratorsAmounts();
+                Iterator<Integer> iter = list.iterator();
+                Integer first = iter.next();
+
+                // Then
+                assertTrue(first.intValue() > 0);
+            } 
+        });
+    }
+
+    @Test
+    public void attributesShouldIncreaseWithTraining() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                // Given
+                Monster monster = new Monster("Name");
+                monster.setEnergy(10000);
+
+                // When
+                monster.trainAttribute(Monster.Attribute.STRENGTH);
+                monster.trainAttribute(Monster.Attribute.DEXTERITY);
+                monster.trainAttribute(Monster.Attribute.WISDOM);                
+
+                // Then
+                assertTrue(monster.getAttribute(Monster.Attribute.STRENGTH) > 0);
+                assertTrue(monster.getAttribute(Monster.Attribute.DEXTERITY) > 0);
+                assertTrue(monster.getAttribute(Monster.Attribute.WISDOM) > 0);
+            } 
+        });
+    }    
+
+    @Test
+    public void attributeCostShouldRaiseWithTraining() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                // Given
+                Monster monster = new Monster("Name");
+                monster.setEnergy(10000);
+                int str = monster.attributeCost(Monster.Attribute.STRENGTH);
+                int dex = monster.attributeCost(Monster.Attribute.DEXTERITY);
+                int wis = monster.attributeCost(Monster.Attribute.WISDOM);
+
+                // When
+                monster.trainAttribute(Monster.Attribute.STRENGTH);
+                monster.trainAttribute(Monster.Attribute.DEXTERITY);
+                monster.trainAttribute(Monster.Attribute.WISDOM);                
+
+                // Then
+                assertTrue(monster.attributeCost(Monster.Attribute.STRENGTH) > str);
+                assertTrue(monster.attributeCost(Monster.Attribute.DEXTERITY) > dex);
+                assertTrue(monster.attributeCost(Monster.Attribute.WISDOM) > wis);
+            } 
+        });
+    }    
+
+    @Test
+    public void energyShouldIncreaseWithAdditions() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                // Given
+                Monster monster = new Monster("Name");
+                int energy = monster.getEnergy();
+
+                // When
+                monster.addEnergy(100);
+
+                // Then
+                assertTrue(monster.getEnergy() > energy);
+            } 
+        });
+    }
+
 
 
 }
