@@ -37,69 +37,69 @@ import javax.persistence.OneToMany;
 @Entity
 public class Generator extends Model {
 		
-		/** 
-		 * The ID used in the database.
-		 */
-		@Id
-		private String id;
+    /** 
+     * The ID used in the database.
+     */
+    @Id
+    private String id;
 		
-		/** 
-		 * The name of this Generator to be displayed.
-		 */
-		private String name;
+    /** 
+     * The name of this Generator to be displayed.
+     */
+    private String name;
 
-		/** 
-		 * The cost of this Generator in the Generator shop.
-		 */
-		private int cost;
+    /** 
+     * The cost of this Generator in the Generator shop.
+     */
+    private int cost;
 
-		/** 
-		 * The amount of energy generated at each interval.
-		 */
-		private int energyPerInstant;
+    /** 
+     * The amount of energy generated at each interval.
+     */
+    private int energyPerInstant;
 		
-		/** 
-		 * The Finder used by the database.
-		 */
-		public static Finder<String,Generator> find =
-				new Finder<String,Generator>(String.class, Generator.class);
+    /** 
+     * The Finder used by the database.
+     */
+    public static Finder<String,Generator> find =
+	new Finder<String,Generator>(String.class, Generator.class);
 		
 
-		// Constructors
-		public Generator() {
-			this.setCost(1);
-			this.setEnergyPerInstant(1);
-		}
+    // Constructors
+    public Generator() {
+	this.setCost(1);
+	this.setEnergyPerInstant(1);
+    }
 		
-		public Generator(String name, int cost, int energy) {
-			this.setName(name);			
-			this.setCost(cost);
-			this.setEnergyPerInstant(energy);
-		}
+    public Generator(String name, int cost, int energy) {
+	this.setName(name);			
+	this.setCost(cost);
+	this.setEnergyPerInstant(energy);
+    }
 		
-		// Setters and Getters
-		public String getName() {
-			return name;
-		}
+    // Setters and Getters
+    public String getName() {
+	return this.name;
+    }
 
-		public void setName(String name) {
-			this.name = name;
-		}		
+    public void setName(String name) {
+	this.name = name;
+    }		
 
-		public String getId() {
-			return id;
-		}
+    public String getId() {
+	return this.d;
+    }
 
-		public int getCost() {
-			return cost;
-		}
-		public void setCost(int cost) {
-			this.cost = cost;
-		}
-		public int getEnergyPerInstant() {
-			return energyPerInstant;
-		}
-		public void setEnergyPerInstant(int energyPerInstant) {
-			this.energyPerInstant = energyPerInstant;
-		}
+    public int getCost() {
+	return this.cost;
+    }
+    public void setCost(int cost) {
+	this.cost = cost;
+    }
+    public int getEnergyPerInstant() {
+	return this.energyPerInstant;
+    }
+    public void setEnergyPerInstant(int energyPerInstant) {
+	this.energyPerInstant = energyPerInstant;
+    }
 }

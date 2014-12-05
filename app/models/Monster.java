@@ -48,19 +48,19 @@ public class Monster extends Model {
      * A Finder object used to fetch Skills from the database.
      */
     public static Finder<String,Monster> find = 
-            new Finder<String,Monster>(String.class, Monster.class); 
+	new Finder<String,Monster>(String.class, Monster.class); 
     /** 
      * The id is used by the database to reference each Monster individually.
      */
-	@Id
-	public String id;
+    @Id
+    public String id;
 
     /** 
      * The Inventory contains all Skills that have been purchased for a specific
      * Monster and therefore may be used by that Monster.
      */
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public List<Skill> inventory = new ArrayList<Skill>();
+    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    public List<Skill> inventory = new ArrayList<Skill>();
     /** 
      * The list of Generators contains all the Generators that have been 
      * purchased andare currently active, generating more energy for the player.
@@ -71,15 +71,15 @@ public class Monster extends Model {
     /** 
      * The Monster's name, which may be displayed at the top of the screen.
      */
-	public String name;
+    public String name;
     /** 
      * The Monster's current stored energy points.
      */
-	public int storedEnergy;
+    public int storedEnergy;
     /** 
      * The Monster's Dexterity attribute.
      */
-	public int dexterity;
+    public int dexterity;
     /** 
      * The Monster's Strength attribute.
      */
@@ -90,15 +90,15 @@ public class Monster extends Model {
     public int wisdom;
     
 	
-	// Constructor
-	public Monster(String name) {
-		super();
-		this.name = name;
-		this.storedEnergy = 0;
-		this.dexterity = 1;
-		this.strength = 1;
-		this.wisdom = 1;
-	}
+    // Constructor
+    public Monster(String name) {
+	super();
+	this.name = name;
+	this.storedEnergy = 0;
+	this.dexterity = 1;
+	this.strength = 1;
+	this.wisdom = 1;
+    }
 	
     // Skills
     /** 
@@ -109,14 +109,14 @@ public class Monster extends Model {
      * @return @p true if the purchase was successfully completed, @p false
      * otherwise.
      */
-	public boolean purchase(Skill skill) {
-		if (this.mayPurchase(skill)) {
-			this.setEnergy(this.getEnergy() - skill.getCost());
-			this.inventory.add(skill);
-			return true;
-		}
-		return false;
+    public boolean purchase(Skill skill) {
+	if (this.mayPurchase(skill)) {
+	    this.setEnergy(this.getEnergy() - skill.getCost());
+	    this.inventory.add(skill);
+	    return true;
 	}
+	return false;
+    }
 	
     /** 
      * Check if the Monster is able to buy the Skill (if it has the necessary
@@ -124,32 +124,32 @@ public class Monster extends Model {
      * @param skill The desired Skill to purchase.
      * @return @p true if the purchase is possible, @p false otherwise.
      */
-	public boolean mayPurchase(Skill skill) {
-		if (this.getDexterity() < skill.getRequiredDexterity()
-                || this.getStrength() < skill.getRequiredStrength()
-                || this.getWisdom() < skill.getRequiredWisdom() 
-                || this.getEnergy() < skill.getCost()) {
-			return false;
+    public boolean mayPurchase(Skill skill) {
+	if (this.getDexterity() < skill.getRequiredDexterity()
+	    || this.getStrength() < skill.getRequiredStrength()
+	    || this.getWisdom() < skill.getRequiredWisdom() 
+	    || this.getEnergy() < skill.getCost()) {
+	    return false;
         }
-		if (this.hasSkill(skill)) {
-			return false;
+	if (this.hasSkill(skill)) {
+	    return false;
         }
-		return true;
-	}
+	return true;
+    }
 	
     /** 
      * Check if the Monster has the given skill in its inventory.
      * @param skill The skill to check.
      * @return @p true if the skill is present, @p false otherwise.
      */
-	public boolean hasSkill(Skill skill) {
-	    for (Skill eachSkill : this.getInventory()) {
-	        if (eachSkill.getId() == skill.getId()) {
+    public boolean hasSkill(Skill skill) {
+	for (Skill eachSkill : this.getInventory()) {
+	    if (eachSkill.getId() == skill.getId()) {
                 return true;
             }
         }
-	    return false;
-	}
+	return false;
+    }
 	
     
     // Generators
@@ -295,13 +295,13 @@ public class Monster extends Model {
     }
 
     // Getters and Setters
-	public List<Skill> getInventory() {
-		return inventory;
-	}
+    public List<Skill> getInventory() {
+	return inventory;
+    }
 	
-	public String getId() {
-		return this.id;
-	}
+    public String getId() {
+	return this.id;
+    }
 
     public String getName() {
         return this.name;
@@ -323,14 +323,14 @@ public class Monster extends Model {
      */
     public int getAttribute(Attribute attribute) {
         switch (attribute) {
-            case STRENGTH:
-                return this.getStrength();
-            case DEXTERITY:
-                return this.getDexterity();
-            case WISDOM:
-                return this.getWisdom();
-            default:
-                throw new IllegalArgumentException("The given attribute was not recognized.");
+	case STRENGTH:
+	    return this.getStrength();
+	case DEXTERITY:
+	    return this.getDexterity();
+	case WISDOM:
+	    return this.getWisdom();
+	default:
+	    throw new IllegalArgumentException("The given attribute was not recognized.");
         }
     }
     
@@ -343,17 +343,17 @@ public class Monster extends Model {
     public void setAttribute(Attribute Attribute, int valor)
     {
         switch (Attribute) {
-            case STRENGTH:
-                this.setStrength(valor);
-                break;
-            case DEXTERITY:
-                this.setDexterity(valor);
-                break;
-            case WISDOM:
-                this.setWisdom(valor);
-                break;
-            default:
-                throw new IllegalArgumentException("The given attribute was not recognized.");
+	case STRENGTH:
+	    this.setStrength(valor);
+	    break;
+	case DEXTERITY:
+	    this.setDexterity(valor);
+	    break;
+	case WISDOM:
+	    this.setWisdom(valor);
+	    break;
+	default:
+	    throw new IllegalArgumentException("The given attribute was not recognized.");
                 
         }
     }
@@ -366,14 +366,14 @@ public class Monster extends Model {
     }
 
     private int getStrength() {
-        return strength;
+        return this.strength;
     }
     private void setStrength(int strength) {
         this.strength = strength;
     }
 
     private int getWisdom() {
-        return wisdom;
+        return this.wisdom;
     }
     private void setWisdom(int wisdom) {
         this.wisdom = wisdom;
