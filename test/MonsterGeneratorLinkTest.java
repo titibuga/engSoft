@@ -16,13 +16,19 @@ import models.MonsterGeneratorLink;
 public class MonsterGeneratorLinkTest {
 
     @Test
-    public void shouldCreateLink() {
+    public void newLinksShouldNotBeNull() {
         running(fakeApplication(), new Runnable() {
             public void run() {
                 // Given
+                MonsterGeneratorLink link;
                 Monster monster = new Monster("Name");
                 Generator generator = new Generator("Name", 0, 0);
-                MonsterGeneratorLink link = new MonsterGeneratorLink(generator, monster);
+                monster.save();
+                generator.save();
+                monster.purchase(generator);
+                List<MonsterGeneratorLink> list = monster.getGeneratorLinks();
+                Iterator<MonsterGeneratorLink> iter = list.iterator();
+                link = iter.next();
 
                 // Then
                 assertTrue(link != null);
@@ -32,21 +38,24 @@ public class MonsterGeneratorLinkTest {
     }
 
     @Test
-    public void stuffShouldHappen() {
+    public void newGeneratorShouldIncreaseEnergyPerInstant() {
         running(fakeApplication(), new Runnable() {
             public void run() {
                 // Given
+                MonsterGeneratorLink link;
                 Monster monster = new Monster("Name");
-                Generator generator = new Generator("Name", 0, 0);
-
-                // When
+                Generator generator = new Generator("Name", 0, 10);
+                monster.save();
+                generator.save();
+                monster.purchase(generator);
+                List<MonsterGeneratorLink> list = monster.getGeneratorLinks();
+                Iterator<MonsterGeneratorLink> iter = list.iterator();
+                link = iter.next();
 
                 // Then
-                assertTrue(true);
+                assertTrue(link.totalEnergyPerInstant() > 0);
             } 
         });
     }
-
-
 
 }

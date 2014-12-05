@@ -58,7 +58,7 @@ public class MonsterGeneratorLink extends Model{
 	@ManyToOne
 	@JoinColumn(name = "monster_id", referencedColumnName = "id", 
 			nullable = false, insertable=false, updatable=false) 
-	public Monster mon;
+	public Monster monster;
 
 	/** 
 	 * The Generator this link refers to.
@@ -75,10 +75,12 @@ public class MonsterGeneratorLink extends Model{
 	
 
 	// Constructors
-	public MonsterGeneratorLink(Generator generator, Monster mon) {
+	public MonsterGeneratorLink(Generator generator, Monster monster) {
 		super();
-		this.key = new MonsterGeneratorKey(generator.getId(), mon.getId());
+		this.key = new MonsterGeneratorKey(generator.getId(), monster.getId());
 		this.amount = 1;	
+		this.generator = generator;
+		this.monster = monster;
 	}
 	
 	// Setters and Getters

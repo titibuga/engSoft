@@ -65,7 +65,7 @@ public class Monster extends Model {
      * The list of Generators contains all the Generators that have been 
      * purchased andare currently active, generating more energy for the player.
      */
-    @OneToMany(mappedBy = "mon", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "monster", cascade = CascadeType.ALL)
     public List<MonsterGeneratorLink> generators;
     
     /** 

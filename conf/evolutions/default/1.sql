@@ -53,8 +53,8 @@ create sequence monster_generator_link_seq;
 
 create sequence skill_seq;
 
-alter table monster_generator_link add constraint fk_monster_generator_link_mon_1 foreign key (monster_id) references monster (id) on delete restrict on update restrict;
-create index ix_monster_generator_link_mon_1 on monster_generator_link (monster_id);
+alter table monster_generator_link add constraint fk_monster_generator_link_mons_1 foreign key (monster_id) references monster (id) on delete restrict on update restrict;
+create index ix_monster_generator_link_mons_1 on monster_generator_link (monster_id);
 alter table monster_generator_link add constraint fk_monster_generator_link_gene_2 foreign key (generator_id) references generator (id) on delete restrict on update restrict;
 create index ix_monster_generator_link_gene_2 on monster_generator_link (generator_id);
 
