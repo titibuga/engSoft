@@ -49,9 +49,11 @@ public class Application extends Controller  {
      */
     public static Result skillShop(String id) {
     	Monster monster = Monster.find.byId(id);
-        List<Skill> skills = Skill.find.all();
+        List<Skill> skills;
 
         createInitialSkills();
+
+        skills = Skill.find.all();
 
     	return ok(skillShop.render(monster, skills));
     }
@@ -61,10 +63,12 @@ public class Application extends Controller  {
      */
     public static Result generatorShop(String id) {
         Monster monster = Monster.find.byId(id);
-        List<Generator> generators = Generator.find.all();
+        List<Generator> generators;
 
         createInitialGenerators();
         
+        generators = Generator.find.all();
+
         return ok(generatorShop.render(monster, generators));
     }
 
