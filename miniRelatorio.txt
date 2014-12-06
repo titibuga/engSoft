@@ -1,0 +1,17 @@
+Todos os 3 alunos desse grupo do projeto tentaram mexer pelo
+menos um pouco em cada parte do projeto. Apesar disso, o Victor
+foi quem mais mexer no sistema em si, o Vinicius fez a maior
+parte dos testes do sistema, assim como a padronização do código
+para o estilo do Java Coding Style Convention, e o Mateus focou
+na documentação do projeto. Ainda assim, muitas vezes essas tarefas
+eram feitas pareadas.
+
+Como nosso projeto é um jogo, tivemos dificuldade de adequar algumas
+documentações que aparentemente não se encaixavam direito para modelar
+jogos, como a Visão Técnica. O nosso aplicativo está no ar no endereço:
+
+stormy-atoll-3181.herokuapp.com
+
+
+Para ligar o servidor local, é preciso ter o Play Framework instalado.
+Rode o activator na pasta raiz do projeto, e então use o comando "run".
