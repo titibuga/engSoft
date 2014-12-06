@@ -49,11 +49,6 @@ public class Monster extends Model {
      */
     public static Finder<String,Monster> find = 
             new Finder<String,Monster>(String.class, Monster.class); 
-    /** 
-     * The id is used by the database to reference each Monster individually.
-     */
-	@Id
-	public String id;
 
     /** 
      * The Inventory contains all Skills that have been purchased for a specific
@@ -79,16 +74,21 @@ public class Monster extends Model {
     /** 
      * The Monster's Dexterity attribute.
      */
-	public int dexterity;
+	private int dexterity;
     /** 
      * The Monster's Strength attribute.
      */
-    public int strength;
+    private int strength;
     /** 
      * The Monster's Wisdom attribute.
      */
-    public int wisdom;
+    private int wisdom;
     
+    /** 
+     * The id is used by the database to reference each Monster individually.
+     */
+    @Id
+    private String id;
 	
 	// Constructor
 	public Monster(String name) {
@@ -338,17 +338,17 @@ public class Monster extends Model {
      * @param value The new value that the Monster's attribute should have.
      * This method throws an exception if the attribute is unknown.
      */
-    public void setAttribute(Attribute Attribute, int valor)
+    public void setAttribute(Attribute Attribute, int value)
     {
         switch (Attribute) {
             case STRENGTH:
-                this.setStrength(valor);
+                this.setStrength(value);
                 break;
             case DEXTERITY:
-                this.setDexterity(valor);
+                this.setDexterity(value);
                 break;
             case WISDOM:
-                this.setWisdom(valor);
+                this.setWisdom(value);
                 break;
             default:
                 throw new IllegalArgumentException("The given attribute was not recognized.");
@@ -359,6 +359,7 @@ public class Monster extends Model {
     private int getDexterity() {
         return dexterity;
     }
+    
     private void setDexterity(int dexterity) {
         this.dexterity = dexterity;
     }
@@ -373,6 +374,7 @@ public class Monster extends Model {
     private int getWisdom() {
         return wisdom;
     }
+
     private void setWisdom(int wisdom) {
         this.wisdom = wisdom;
     }

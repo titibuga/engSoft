@@ -38,6 +38,12 @@ import javax.persistence.OneToMany;
 public class Generator extends Model {
 		
 		/** 
+		 * The Finder used by the database.
+		 */
+		public static Finder<String,Generator> find =
+				new Finder<String,Generator>(String.class, Generator.class);
+
+		/** 
 		 * The ID used in the database.
 		 */
 		@Id
@@ -57,12 +63,6 @@ public class Generator extends Model {
 		 * The amount of energy generated at each interval.
 		 */
 		private int energyPerInstant;
-		
-		/** 
-		 * The Finder used by the database.
-		 */
-		public static Finder<String,Generator> find =
-				new Finder<String,Generator>(String.class, Generator.class);
 		
 
 		// Constructors

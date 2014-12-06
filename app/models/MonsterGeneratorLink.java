@@ -50,7 +50,7 @@ public class MonsterGeneratorLink extends Model{
 	 * the relationship pertaining the database is stored in the key.
 	 */
 	@EmbeddedId
-	public MonsterGeneratorKey key;
+	private MonsterGeneratorKey key;
 	
 	/** 
 	 * The Monster this link refers to.
@@ -115,7 +115,7 @@ public class MonsterGeneratorLink extends Model{
 	 * pertaining the database such as the IDs and Keys.
 	 */
 	@Embeddable
-	public class MonsterGeneratorKey implements Serializable{
+	public class MonsterGeneratorKey implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 

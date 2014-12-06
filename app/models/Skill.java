@@ -43,7 +43,7 @@ public class Skill extends Model {
 	* The id is used by the database to reference each Skill individually.
 	*/
 	@Id
-	public String id;	
+	private String id;	
 	
 	/** 
 	 * The minimum value required of the monster in its Dexterity 
