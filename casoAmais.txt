@@ -1,0 +1,20 @@
+Caso de uso: Compra de Habilidade
+• Descrição: Gasta-se certo montante de energia para a aquisição de 
+habilidade que irão para o inventário do monstro podendo posteriormente
+serem usadas em combate
+
+
+
+• Pré-condições: Ter energia suficiente para a compra.
+• Pós-condições: A habilidade estará disponível no inventário
+do monstro
+
+
+
+• Fluxo principal:
++ 1- O jogador escolhe dentre as habilidades disponíveis na loja (al-
+gumas habilidades têm pré-requisitos de compras, só é possível comprar
+habilidades com pre-requisitos satisfeitos).
++ 2- Caso ele possua o suficiente para realizar a compra, o montante
+de energia é descontado de seu inventário.
++ 3- A habilidade é adiciona ao inventário de habilidades do monstro
